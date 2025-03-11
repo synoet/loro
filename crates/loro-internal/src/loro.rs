@@ -1,5 +1,4 @@
 pub use crate::encoding::ExportMode;
-use crate::jsoninit::PathMapping;
 pub use crate::state::analyzer::{ContainerAnalysisInfo, DocAnalysis};
 pub(crate) use crate::LoroDocInner;
 use crate::{
@@ -96,17 +95,6 @@ impl LoroDoc {
             }
         });
         Self { inner }
-    }
-
-    /// Initializes a LoroDoc from json using the provided path mappings
-    pub fn try_from_json(
-        json: serde_json::Value,
-        path_mappings: Vec<PathMapping>,
-    ) -> LoroResult<Self> {
-        let mut doc = Self::new();
-        doc.start_auto_commit();
-        jsoninit::initialize_from_json(&mut doc, &json, path_mappings.as_slice()).unwrap();
-        Ok(doc)
     }
 
     pub fn fork(&self) -> Self {
