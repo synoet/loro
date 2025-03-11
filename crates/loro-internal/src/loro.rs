@@ -1,3 +1,4 @@
+use crate::change::ChangeRef;
 pub use crate::encoding::ExportMode;
 pub use crate::state::analyzer::{ContainerAnalysisInfo, DocAnalysis};
 pub(crate) use crate::LoroDocInner;
@@ -33,7 +34,6 @@ use crate::{
     ChangeMeta, DocDiff, HandlerTrait, InternalString, ListHandler, LoroDoc, LoroError, MapHandler,
     VersionVector,
 };
-use crate::{change::ChangeRef, jsoninit};
 use either::Either;
 use fxhash::{FxHashMap, FxHashSet};
 use loro_common::{

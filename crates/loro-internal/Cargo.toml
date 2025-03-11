@@ -90,6 +90,7 @@ test_utils = ["arbitrary", "tabled"]
 # whether enable the counter container
 counter = ["loro-common/counter"]
 jsonpath = []
+jsoninit = ["jsonpath"]
 
 [[bench]]
 name = "text_r"

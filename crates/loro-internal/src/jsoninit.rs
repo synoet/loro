@@ -319,7 +319,6 @@ fn fill_container(
     data: &JsonValue,
     path: &str,
 ) -> Result<(), JsonInitError> {
-    // Handle null values
     if data.is_null() {
         return Err(JsonInitError::ValidationError(
             PathValidationError::BoundsError {
@@ -462,7 +461,6 @@ pub fn initialize_from_json(
     path_mappings: &[PathMapping],
 ) -> Result<(), JsonInitError> {
     validate_path_mappings(path_mappings)?;
-    println!("path_mappings: {:?}", path_mappings);
 
     let sorted_paths = topologically_sort_paths(path_mappings);
 
