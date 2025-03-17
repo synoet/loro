@@ -2,26 +2,44 @@ use loro_common::ContainerType;
 use loro_internal::{jsoninit, LoroDoc};
 use serde_json::json;
 
-pub fn main() {
+pub fn initialize_without_mappings() {
     let json = json!({
-        "nodes": {
-            "a": {
-                "children": ["b", "c"]
-            },
-        },
-        "edges": [
-            {"from": "a", "to": "b"},
-        ],
-        "ids": ["a", "b", "c"]
+        "root": {
+            "list" : [1, 2, 3],
+            "map" : {
+                "key" : "value"
+            }
+        }
+    });
+
+    let doc = LoroDoc::try_from_json(json, vec![].as_slice()).unwrap();
+    dbg!(doc.get_value());
+}
+
+pub fn initialize_with_mappings() {
+    let json = json!({
+        "root": {
+            "list" : [1, 2, 3],
+            "map" : {
+                "key" : "value"
+            }
+        }
     });
 
     let mappings = vec![
-        jsoninit::PathMapping::new("nodes", "$.nodes", ContainerType::Map),
-        jsoninit::PathMapping::new("edges", "$.edges", ContainerType::MovableList),
-        jsoninit::PathMapping::new("ids", "$.ids", ContainerType::List),
+        // root itself is a LoroMap
+        jsoninit::PathMapping::new("$.root", ContainerType::Map),
+        // list is a LoroList
+        jsoninit::PathMapping::new("$.root.list", ContainerType::MovableList),
+        // every item inside the map is a LoroText
+        jsoninit::PathMapping::new("$.root.map[*]", ContainerType::Text),
     ];
 
-    let mut doc = LoroDoc::try_from_json(json, mappings).unwrap();
-
+    let doc = LoroDoc::try_from_json(json, mappings.as_slice()).unwrap();
     dbg!(doc.get_value());
+}
+
+pub fn main() {
+    initialize_without_mappings();
+    initialize_with_mappings();
 }
