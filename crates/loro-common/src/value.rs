@@ -918,6 +918,7 @@ pub fn to_value<T: Into<LoroValue>>(value: T) -> LoroValue {
     value.into()
 }
 
+#[cfg(feature = "serde_json")]
 mod serde_json_impl {
     use serde_json::{Number, Value};
 
