@@ -45,7 +45,8 @@ pub mod dag;
 pub mod encoding;
 pub(crate) mod fork;
 pub mod id;
-#[cfg(feature = "jsoninit")]
+pub mod json_init;
+#[cfg(feature = "jsonpath")]
 pub mod jsoninit;
 #[cfg(feature = "jsonpath")]
 pub mod jsonpath;
